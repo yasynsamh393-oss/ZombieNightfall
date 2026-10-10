@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Zombie Nightfall</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="gameCanvas"></canvas>
+
+  <div id="ui">
+    <div id="mainMenu" class="screen active">
+      <div class="panel">
+        <h1>ZOMBIE NIGHTFALL</h1>
+        <p class="subtitle" data-i18n="tagline">Survive the endless night</p>
+        <div class="btn-row">
+          <button class="btn primary" data-action="goto" data-target="gamesScreen" data-i18n="btn_games">Games</button>
+          <button class="btn" data-action="goto" data-target="skinsScreen" data-i18n="btn_skins">Skins</button>
+          <button class="btn" data-action="goto" data-target="themesScreen" data-i18n="btn_themes">Themes</button>
+          <button class="btn" data-action="goto" data-target="settingsScreen" data-i18n="btn_settings">Settings</button>
+        </div>
+        <p class="footer-tag">v2.1 · Full Game</p>
+      </div>
+    </div>
+
+    <div id="gamesScreen" class="screen">
+      <div class="panel">
+        <button class="btn back-btn" data-action="goto" data-target="mainMenu" data-i18n="btn_back">← Back</button>
+        <h2 data-i18n="games_title">Select Mode</h2>
+        <div class="btn-row">
+          <button class="btn primary" data-action="setPlatform" data-val="pc">PC</button>
+          <button class="btn" data-action="setPlatform" data-val="mobile">Mobile</button>
+        </div>
+        <div class="btn-row" style="margin-top:8px">
+          <button class="btn green" data-action="setPlayers" data-val="1">1 Player</button>
+          <button id="btn2p" class="btn" data-action="setPlayers" data-val="2">2 Players</button>
+        </div>
+        <div class="btn-row" style="margin-top:16px">
+          <button class="btn primary gold" data-action="startGame">▶ Start</button>
+        </div>
+        <p id="modeHint" class="subtitle" style="margin-top:12px"></p>
+      </div>
+    </div>
+
+    <div id="skinsScreen" class="screen">
+      <div class="panel">
+        <button class="btn back-btn" data-action="goto" data-target="mainMenu">← Back</button>
+        <h2>Skins</h2>
+        <div class="coins-display" id="skinsCoins">🪙 0</div>
+        <div class="skin-preview-wrap">
+          <canvas id="skinPreviewCanvas" width="128" height="128"></canvas>
+          <div class="skin-info">
+            <div class="name" id="skinName">Recruit</div>
+            <div class="desc" id="skinDesc">Basic survivor</div>
+            <div class="skin-stats" id="skinStats"></div>
+            <div class="skin-status" id="skinStatus"></div>
+          </div>
+          <div class="btn-row">
+            <button class="btn gold" id="btnBuySkin" data-action="buySkin">Buy</button>
+            <button class="btn green" id="btnEquipSkin" data-action="equipSkin">Equip</button>
+          </div>
+        </div>
+        <div class="skin-bar-wrap">
+          <div class="skin-bar" id="skinBar"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="themesScreen" class="screen">
+      <div class="panel">
+        <button class="btn back-btn" data-action="goto" data-target="mainMenu">← Back</button>
+        <h2>Themes</h2>
+        <div class="theme-grid" id="themeGrid"></div>
+      </div>
+    </div>
+
+    <div id="settingsScreen" class="screen">
+      <div class="panel">
+        <button class="btn back-btn" data-action="goto" data-target="mainMenu">← Back</button>
+        <h2>Settings</h2>
+        <div class="setting-row">
+          <label>Music</label>
+          <input type="range" id="volMusic" min="0" max="100" value="40" />
+        </div>
+        <div class="setting-row">
+          <label>SFX</label>
+          <input type="range" id="volSfx" min="0" max="100" value="70" />
+        </div>
+        <div class="setting-row">
+          <label>Screen Shake</label>
+          <input type="checkbox" id="chkShake" checked />
+        </div>
+        <div class="setting-row">
+          <label>Language</label>
+          <select id="selLang">
+            <option value="en">English</option>
+            <option value="ar">عربي</option>
+            <option value="zh">中文</option>
+            <option value="de">Deutsch</option>
+            <option value="es">Español</option>
+            <option value="ko">한국어</option>
+            <option value="ja">日本語</option>
+          </select>
+        </div>
+        <div class="btn-row" style="margin-top:16px">
+          <button class="btn" data-action="muteAll">Mute All</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="levelUpScreen" class="screen">
+      <div class="panel" style="max-width:420px">
+        <h2>LEVEL UP!</h2>
+        <p class="subtitle">Choose an ability</p>
+        <div id="abilityChoices"></div>
+      </div>
+    </div>
+
+    <div id="pauseScreen" class="screen">
+      <div class="panel" style="max-width:360px">
+        <h2>PAUSED</h2>
+        <div class="btn-row">
+          <button class="btn primary" data-action="resume">Resume</button>
+          <button class="btn" data-action="quitToMenu">Main Menu</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="gameOverScreen" class="screen">
+      <div class="panel" style="max-width:420px">
+        <h2>GAME OVER</h2>
+        <div id="goStats" style="text-align:center; margin:18px 0; line-height:1.8; font-weight:700;"></div>
+        <div class="btn-row">
+          <button class="btn primary" data-action="restart">Play Again</button>
+          <button class="btn" data-action="quitToMenu">Main Menu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="hud">
+    <div class="hud-bar" id="hpBar"><div style="width:100%"></div></div>
+    <div class="hud-bar" id="stamBar"><div style="width:100%"></div></div>
+    <div class="hud-bar" id="xpBar"><div style="width:0%"></div></div>
+
+    <div class="hud-text" id="hudStats"></div>
+    <div class="hud-text" id="hudCoins">🪙 0</div>
+    <div class="hud-text" id="hudWave">Wave 1</div>
+
+    <canvas id="minimap" width="110" height="110"></canvas>
+  </div>
+
+  <div id="mobileControls">
+    <div class="joy-base" id="joyBase">
+      <div class="joy-stick" id="joyStick"></div>
+    </div>
+    <div class="m-btn" id="btnFire">FIRE</div>
+    <div class="m-btn" id="btnReload">R</div>
+    <div class="m-btn" id="btnPowerQ">Q</div>
+    <div class="m-btn" id="btnPowerE">E</div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "appId": "com.zombienightfall.game",
+  "appName": "Zombie Nightfall",
+  "webDir": ".",
+  "bundledWebRuntime": false
+}

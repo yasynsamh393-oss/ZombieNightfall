@@ -1,0 +1,23 @@
+{
+  "name": "zombie-nightfall",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Zombie Nightfall game project with web, Electron desktop, and Android packaging support.",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "npx http-server . -p 8080",
+    "dev": "npx http-server . -p 8080",
+    "electron": "electron .",
+    "build:win": "electron-builder build --win",
+    "build:android": "npx cap sync android && npx cap open android",
+    "install:tools": "npm install --save-dev electron electron-builder http-server @capacitor/cli @capacitor/core @capacitor/android"
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.0",
+    "http-server": "^14.1.0",
+    "@capacitor/cli": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/android": "^6.0.0"
+  }
+}

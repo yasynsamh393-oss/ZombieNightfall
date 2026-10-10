@@ -1,0 +1,24 @@
+{
+  "appId": "com.zombienightfall.game",
+  "productName": "Zombie Nightfall",
+  "files": [
+    "index.html",
+    "style.css",
+    "game.js",
+    "electron/**/*",
+    "package.json"
+  ],
+  "directories": {
+    "app": ".",
+    "output": "dist"
+  },
+  "win": {
+    "target": ["portable", "nsis"],
+    "icon": "icon.ico"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "installerIcon": "icon.ico"
+  }
+}
